@@ -215,6 +215,18 @@ export default function CreateRestaurantScreen ({ navigation }) {
 
                 />
 
+              <TextRegular>Restaurante vegano</TextRegular>
+              <Switch
+                trackColor={{ false: brandSecondary, true: brandPrimary }}
+                thumbColor={values.esVegano ? brandSecondary : '#f4f3f4'}
+                value={values.esVegano}
+                style={styles.switch}
+                onValueChange={value =>
+                  setFieldValue('esVegano', value)
+                }
+
+                />
+
               {backendErrors &&
                 backendErrors.map((error, index) => <TextError key={index}>{error.msg}</TextError>)
               }

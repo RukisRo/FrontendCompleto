@@ -48,11 +48,16 @@ export default function RestaurantsScreen ({ navigation, route }) {
          {item.enPromocion &&
           <TextRegular textStyle={{ color: brandPrimary, textAlign: 'right' }}>En promoción!</TextRegular>
         }
+        {item.esVegano &&
+          <TextRegular textStyle={{ color: 'green', textAlign: 'right' }}>Este restaurante es vegano, bien!!</TextRegular>
+        }
         <TextRegular numberOfLines={2}>{item.description}</TextRegular>
         {item.averageServiceMinutes !== null &&
           <TextSemiBold>Avg. service time: <TextSemiBold textStyle={{ color: brandPrimary }}>{item.averageServiceMinutes} min.</TextSemiBold></TextSemiBold>
         }
         <TextSemiBold>Shipping: <TextSemiBold textStyle={{ color: brandPrimary }}>{item.shippingCosts.toFixed(2)}€</TextSemiBold></TextSemiBold>
+        <TextSemiBold>Teléfono: <TextRegular textStyle={{ color: brandPrimary }}>{item.phone
+        }</TextRegular></TextSemiBold>
       </ImageCard>
     )
   }
