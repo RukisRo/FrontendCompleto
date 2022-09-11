@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Image, Platform, Pressable, ScrollView, StyleSheet, View } from 'react-native'
+import { Image, Platform, Pressable, ScrollView, StyleSheet, View, Switch } from 'react-native'
 import * as ExpoImagePicker from 'expo-image-picker'
 import * as yup from 'yup'
 import DropDownPicker from 'react-native-dropdown-picker'
@@ -18,7 +18,7 @@ export default function CreateRestaurantScreen ({ navigation }) {
   const [restaurantCategories, setRestaurantCategories] = useState([])
   const [backendErrors, setBackendErrors] = useState()
 
-  const initialRestaurantValues = { name: '', description: '', address: '', postalCode: '', url: '', shippingCosts: 0, email: '', phone: '', restaurantCategoryId: '' }
+  const initialRestaurantValues = { name: '', description: '', address: '', postalCode: '', url: '', shippingCosts: 0, email: '', phone: '', enPromocion: true, restaurantCategoryId: '' }
   const validationSchema = yup.object().shape({
     name: yup
       .string()
@@ -201,6 +201,19 @@ export default function CreateRestaurantScreen ({ navigation }) {
                 <TextRegular>Hero image: </TextRegular>
                 <Image style={styles.image} source={values.heroImage ? { uri: values.heroImage.uri } : restaurantBackground} />
               </Pressable>
+
+               {/* SOLUTION */}
+               <TextRegular>Está en Promoción?</TextRegular>
+              <Switch
+                trackColor={{ false: brandSecondary, true: brandPrimary }}
+                thumbColor={values.enPromocion ? brandSecondary : '#f4f3f4'}
+                value={values.enPromocion}
+                style={styles.switch}
+                onValueChange={value =>
+                  setFieldValue('enPromocion', value)
+                }
+
+                />
 
               {backendErrors &&
                 backendErrors.map((error, index) => <TextError key={index}>{error.msg}</TextError>)

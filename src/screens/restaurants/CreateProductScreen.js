@@ -17,7 +17,7 @@ export default function CreateProductScreen ({ navigation, route }) {
   const [productCategories, setProductCategories] = useState([])
   const [backendErrors, setBackendErrors] = useState()
 
-  const initialProductValues = { name: '', description: '', price: 0, order: 0, restaurantId: route.params.id, productCategoryId: null, availability: true }
+  const initialProductValues = { name: '', description: '', price: 0, order: 0, fats: 0, proteins: 0, carbohydrates: 0, restaurantId: route.params.id, productCategoryId: null, availability: true, enPromocion: true }
   const validationSchema = yup.object().shape({
     name: yup
       .string()
@@ -30,7 +30,20 @@ export default function CreateProductScreen ({ navigation, route }) {
     order: yup
       .number()
       .positive('Please provide a positive cost value')
-      .integer('Please provide an integer cost value')
+      .integer('Please provide an integer cost value'),
+    // Solution
+    fats: yup
+      .number()
+      .positive('Please provide a positive cost value')
+      .max(100, 'The values must be lower or equal than 100'),
+    proteins: yup
+      .number()
+      .positive('Please provide a positive cost value')
+      .max(100, 'The values must be lower or equal than 100'),
+    carbohydrates: yup
+      .number()
+      .positive('Please provide a positive cost value')
+      .max(100, 'The values must be lower or equal than 100')
   })
 
   useEffect(() => {
@@ -71,8 +84,8 @@ export default function CreateProductScreen ({ navigation, route }) {
 
   const createProduct = async (values) => {
     setBackendErrors([])
+    console.log(values)
     try {
-      console.log(values)
       const createdProduct = await create(values)
       showMessage({
         message: `Product ${createdProduct.name} succesfully created`,
@@ -111,7 +124,19 @@ export default function CreateProductScreen ({ navigation, route }) {
                 name='order'
                 label='Order/position to be rendered:'
               />
-
+              {/* Solution */}
+              <InputItem
+                name='fats'
+                label='Fats:'
+              />
+              <InputItem
+                name='proteins'
+                label='Proteins:'
+              />
+              <InputItem
+                name='carbohydrates'
+                label='Carbohydrates:'
+              />
               <DropDownPicker
                 open={open}
                 value={values.productCategoryId}
@@ -136,6 +161,18 @@ export default function CreateProductScreen ({ navigation, route }) {
                 style={styles.switch}
                 onValueChange={value =>
                   setFieldValue('availability', value)
+                }
+              />
+
+              <TextRegular>¿Está en promoción?</TextRegular>
+              <Switch
+                trackColor={{ false: brandSecondary, true: brandPrimary }}
+                thumbColor={values.enPromocion ? brandSecondary : '#f4f3f4'}
+                // onValueChange={toggleSwitch}
+                value={values.enPromocion}
+                style={styles.switch}
+                onValueChange={value =>
+                  setFieldValue('enPromocion', value)
                 }
               />
 

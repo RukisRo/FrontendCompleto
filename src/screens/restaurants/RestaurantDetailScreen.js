@@ -65,10 +65,18 @@ export default function RestaurantDetailScreen ({ navigation, route }) {
     return (
       <ImageCard
         imageUri={item.image ? { uri: process.env.API_BASE_URL + '/' + item.image } : undefined}
-        title={item.name}
+        title={item.name }
       >
-        <TextRegular numberOfLines={2}>{item.description}</TextRegular>
+
+        <TextRegular numberOfLines={2}>{item.description }</TextRegular>
         <TextSemiBold textStyle={styles.price}>{item.price.toFixed(2)}€</TextSemiBold>
+        { item.enPromocion && <TextSemiBold textStyle={{ color: brandPrimary, textAlign: 'right' }}>En promoción!</TextSemiBold> }
+        {/* Solution */}
+        {item.fats && <TextSemiBold>Nutritional composition:</TextSemiBold>}
+        {item.fats && <View style={{ flexDirection: 'row', paddingLeft: 10 }}><TextRegular>Fats: </TextRegular> <TextRegular>{item.fats.toFixed(2)}</TextRegular></View>}
+        {item.proteins && <View style={{ flexDirection: 'row', paddingLeft: 10 }}><TextRegular>Proteins: </TextRegular> <TextRegular>{item.proteins.toFixed(2)}</TextRegular></View>}
+        {item.carbohydrates && <View style={{ flexDirection: 'row', paddingLeft: 10 }}><TextRegular>Carbohydrates: </TextRegular> <TextRegular>{item.carbohydrates.toFixed(2)}</TextRegular></View>}
+        {item.calories && <View style={{ flexDirection: 'row', paddingLeft: 10 }}><TextRegular>Calories: </TextRegular> <TextRegular>{item.calories.toFixed(2)}</TextRegular></View>}
       </ImageCard>
     )
   }
